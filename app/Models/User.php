@@ -42,4 +42,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    //user has one warehouse
+    public function warehouse()
+    {
+        return $this->hasOne(Warehouse::class);
+    }
 }

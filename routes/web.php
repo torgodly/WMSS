@@ -26,6 +26,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+
+    //get warehouse
+    Route::get('/warehouse', [\App\Http\Controllers\WarehouseController::class, 'index'])->name('warehouse.index');
+    //store warehouse
+    Route::post('/warehouse', [\App\Http\Controllers\WarehouseController::class, 'store'])->name('warehouse.store');
+
 });
 
 require __DIR__.'/auth.php';
