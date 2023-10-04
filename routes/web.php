@@ -32,7 +32,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/warehouse', [\App\Http\Controllers\WarehouseController::class, 'index'])->name('warehouse.index');
     //store warehouse
     Route::post('/warehouse', [\App\Http\Controllers\WarehouseController::class, 'store'])->name('warehouse.store');
-
+    //destory
+    Route::delete('/warehouse/{warehouse}', [\App\Http\Controllers\WarehouseController::class, 'destroy'])->name('warehouse.destroy');
+    //show
+    Route::get('/warehouse/{warehouse}', [\App\Http\Controllers\WarehouseController::class, 'show'])->name('warehouse.show');
 });
 
 require __DIR__.'/auth.php';

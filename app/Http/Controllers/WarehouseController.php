@@ -12,7 +12,7 @@ class WarehouseController extends Controller
     {
         $warehouses = Warehouse::with('user')->orderBy('created_at', 'desc')->paginate(10);
         $users = User::all();
-        return view('warehouse.index', compact('warehouses', 'users') );
+        return view('warehouse.index', compact('warehouses', 'users'));
     }
 
     //store warehouse
@@ -29,5 +29,19 @@ class WarehouseController extends Controller
 
         return redirect()->route('warehouse.index')
             ->with('message', 'Warehouse created successfully.');
+    }
+
+    public function destroy(Warehouse $warehouse)
+    {
+        $warehouse->delete();
+
+        return redirect()->route('warehouse.index')
+            ->with('message', 'Warehouse deleted successfully.');
+    }
+
+    //show
+    public function show(Warehouse $warehouse)
+    {
+        return view('warehouse.show', compact('warehouse'));
     }
 }

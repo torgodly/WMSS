@@ -27,6 +27,9 @@
                                 <th class="px-6 py-3 bg-gray-50 text-left">
                                     <span class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">user</span>
                                 </th>
+                                <th class="px-6 py-3 bg-gray-50 text-left">
+                                    <span class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Action</span>
+                                </th>
                             </tr>
                             </thead>
 
@@ -45,6 +48,15 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                         {{$warehouse->user->name}}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900 flex  gap-3">
+                                        <x-secondary-button>
+                                          Edit
+                                        </x-secondary-button>
+                                        <x-primary-button :link="route('warehouse.show', $warehouse->id)">
+                                            Show
+                                        </x-primary-button>
+
                                     </td>
                                 </tr>
                             @endforeach
@@ -107,9 +119,9 @@
                                     <x-input-label for="user_id" :value="__('user')"/>
                                     <select name="user_id"
                                             class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full">
-                                    @foreach($users as $user)
-                                        <option value="{{$user->id}}">{{$user->name}}</option>
-                                    @endforeach
+                                        @foreach($users as $user)
+                                            <option value="{{$user->id}}">{{$user->name}}</option>
+                                        @endforeach
                                     </select>
                                     <x-input-error class="mt-2" :messages="$errors->get('user_id')"/>
                                 </div>
