@@ -10,9 +10,15 @@ class WarehouseController extends Controller
 {
     public function index()
     {
+        $warehousesEdit = null;
+
         $warehouses = Warehouse::with('user')->orderBy('created_at', 'desc')->paginate(10);
         $users = User::all();
-        return view('warehouse.index', compact('warehouses', 'users'));
+
+        if (\request('ID')) {
+            $warehousesEdit = Warehouse::findOrFail(\request('ID'));
+        }
+        return view('warehouse.index', compact('warehouses', 'users', 'warehousesEdit'));
     }
 
     //store warehouse
@@ -43,5 +49,21 @@ class WarehouseController extends Controller
     public function show(Warehouse $warehouse)
     {
         return view('warehouse.show', compact('warehouse'));
+    }
+
+    //update
+    public function update(Request $request, Warehouse $warehouse)
+    {
+        $request->validate([
+            'name' => 'required',
+            'address' => 'required|min:10',
+            'phone' => 'required|min:10',
+            'user_id' => 'required',
+        ]);
+
+        $warehouse->update($request->all());
+
+        return redirect()->route('warehouse.index')
+            ->with('message', 'Warehouse updated successfully.');
     }
 }

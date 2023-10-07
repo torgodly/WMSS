@@ -36,6 +36,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/warehouse/{warehouse}', [\App\Http\Controllers\WarehouseController::class, 'destroy'])->name('warehouse.destroy');
     //show
     Route::get('/warehouse/{warehouse}', [\App\Http\Controllers\WarehouseController::class, 'show'])->name('warehouse.show');
+    //update
+    Route::patch('/warehouse/{warehouse}', [\App\Http\Controllers\WarehouseController::class, 'update'])->name('warehouse.update');
+
+
+    //get product
 });
 
 require __DIR__.'/auth.php';
