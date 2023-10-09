@@ -49,10 +49,15 @@ class WarehouseController extends Controller
     //show
     public function show(Warehouse $warehouse)
     {
+        $productsEdit = null;
         $warehouse->load('products', 'user');
         //get only the products that are not attached to this warehouse simple way
         $products = Product::whereNotIn('id', $warehouse->products->pluck('id'))->get();
-        return view('warehouse.show', compact('warehouse', 'products'));
+        if (\request('ID')) {
+            $productsEdit = $warehouse->products->find(\request('ID'));
+
+        }
+        return view('warehouse.show', compact('warehouse', 'products', 'productsEdit'));
     }
 
     //update
@@ -80,8 +85,36 @@ class WarehouseController extends Controller
             return redirect()->route('warehouse.show', $warehouse->id)
                 ->with('message', 'Product already attached.');
         }
-        $warehouse->products()->attach($request->product_id);
+        $warehouse->products()->attach([$request->product_id => ['quantity' => $request->quantity]]);
         return redirect()->route('warehouse.show', $warehouse->id)
             ->with('message', 'Product attached successfully.');
+    }
+
+    //update product quantity
+    public function updateProductQuantity(Request $request, Warehouse $warehouse)
+    {
+        //check if product already attached
+        if (!$warehouse->products->contains($request->product_id)) {
+            return redirect()->route('warehouse.show', $warehouse->id)
+                ->with('message', 'Product not attached.');
+        }
+
+        $warehouse->products()->updateExistingPivot($request->product_id, ['quantity' => $request->quantity]);
+        return redirect()->route('warehouse.show', $warehouse->id)
+            ->with('message', 'Product quantity updated successfully.');
+    }
+
+    //detach product
+    public function detachProduct(Request $request, Warehouse $warehouse)
+    {
+        //check if product already attached
+        if (!$warehouse->products->contains($request->product_id)) {
+            return redirect()->route('warehouse.show', $warehouse->id)
+                ->with('message', 'Product not attached.');
+        }
+
+        $warehouse->products()->detach($request->product_id);
+        return redirect()->route('warehouse.show', $warehouse->id)
+            ->with('message', 'Product detached successfully.');
     }
 }

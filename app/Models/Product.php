@@ -17,6 +17,6 @@ class Product extends Model
     //warehouses
     public function warehouses()
     {
-        return $this->belongsToMany(Warehouse::class);
+        return $this->belongsToMany(Warehouse::class)->withPivot('quantity');
     }
 }

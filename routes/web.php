@@ -40,6 +40,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/warehouse/{warehouse}', [\App\Http\Controllers\WarehouseController::class, 'update'])->name('warehouse.update');
     //add product to warehouse
     Route::post('/warehouse/{warehouse}/product', [\App\Http\Controllers\WarehouseController::class, 'attachProduct'])->name('warehouse.addProduct');
+    //update product quantity in warehouse
+    Route::patch('/warehouse/{warehouse}/product', [\App\Http\Controllers\WarehouseController::class, 'updateProductQuantity'])->name('warehouse.updateProductQuantity');
+    //remove product from warehouse
+    Route::delete('/warehouse/{warehouse}/product', [\App\Http\Controllers\WarehouseController::class, 'detachProduct'])->name('warehouse.removeProduct');
 
 
     //get product
