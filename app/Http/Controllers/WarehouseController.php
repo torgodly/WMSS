@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\User;
 use App\Models\Warehouse;
 use Illuminate\Http\Request;
@@ -48,7 +49,10 @@ class WarehouseController extends Controller
     //show
     public function show(Warehouse $warehouse)
     {
-        return view('warehouse.show', compact('warehouse'));
+        $warehouse->load('products', 'user');
+        //get only the products that are not attached to this warehouse simple way
+        $products = Product::whereNotIn('id', $warehouse->products->pluck('id'))->get();
+        return view('warehouse.show', compact('warehouse', 'products'));
     }
 
     //update
@@ -65,5 +69,19 @@ class WarehouseController extends Controller
 
         return redirect()->route('warehouse.index')
             ->with('message', 'Warehouse updated successfully.');
+    }
+
+
+    //attach product
+    public function attachProduct(Request $request, Warehouse $warehouse)
+    {
+        //check if product already attached
+        if ($warehouse->products->contains($request->product_id)) {
+            return redirect()->route('warehouse.show', $warehouse->id)
+                ->with('message', 'Product already attached.');
+        }
+        $warehouse->products()->attach($request->product_id);
+        return redirect()->route('warehouse.show', $warehouse->id)
+            ->with('message', 'Product attached successfully.');
     }
 }

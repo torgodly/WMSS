@@ -38,6 +38,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/warehouse/{warehouse}', [\App\Http\Controllers\WarehouseController::class, 'show'])->name('warehouse.show');
     //update
     Route::patch('/warehouse/{warehouse}', [\App\Http\Controllers\WarehouseController::class, 'update'])->name('warehouse.update');
+    //add product to warehouse
+    Route::post('/warehouse/{warehouse}/product', [\App\Http\Controllers\WarehouseController::class, 'attachProduct'])->name('warehouse.addProduct');
 
 
     //get product

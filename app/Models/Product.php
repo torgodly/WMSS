@@ -10,4 +10,13 @@ class Product extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+
+
+
+    //warehouses
+    public function warehouses()
+    {
+        return $this->belongsToMany(Warehouse::class);
+    }
 }

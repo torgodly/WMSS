@@ -16,4 +16,11 @@ class Warehouse extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+
+    //products
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
+    }
 }
