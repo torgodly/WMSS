@@ -56,6 +56,9 @@
                                     <span class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">quantity</span>
                                 </th>
                                 <th class="px-6 py-3 bg-gray-50 text-left">
+                                    <span class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">margin</span>
+                                </th>
+                                <th class="px-6 py-3 bg-gray-50 text-left">
                                     <span class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Action</span>
                                 </th>
                             </tr>
@@ -78,6 +81,9 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                         {{ $product->pivot->quantity }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                        {{ $product->pivot->margin }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
 
@@ -133,9 +139,14 @@
                                     <x-input-error class="mt-2" :messages="$errors->get('user_id')"/>
                                 </div>
                                 <div>
-                                    <x-input-label for="product_id" :value="__('Products')"/>
+                                    <x-input-label for="quantity" :value="__('quantity')"/>
                                     <x-text-input name="quantity" type="number" placeholder="quantity" class="w-full"/>
-                                    <x-input-error class="mt-2" :messages="$errors->get('user_id')"/>
+                                    <x-input-error class="mt-2" :messages="$errors->get('quantity')"/>
+                                </div>
+                                <div>
+                                    <x-input-label for="margin" :value="__('Margin')"/>
+                                    <x-text-input name="margin" type="number" placeholder="margin" class="w-full"/>
+                                    <x-input-error class="mt-2" :messages="$errors->get('margin')"/>
                                 </div>
 
                                 <x-primary-button>submit</x-primary-button>
@@ -166,7 +177,7 @@
 
                                     </button>
 
-                                    <form action="{{route('warehouse.removeProduct', $warehouse->id)}}" method="post" >
+                                    <form action="{{route('warehouse.removeProduct', $warehouse->id)}}" method="post">
                                         @method('DELETE')
                                         @csrf
                                         <x-text-input name="product_id" type="text"
@@ -190,6 +201,13 @@
                                                       :value="$productsEdit->pivot->quantity"
                                                       class="w-full"/>
                                         <x-input-error class="mt-2" :messages="$errors->get('quantity')"/>
+
+                                        <div>
+                                            <x-input-label for="margin" :value="__('Margin')"/>
+                                            <x-text-input name="margin" type="number" placeholder="margin"
+                                                          :value="$productsEdit->pivot->margin" class="w-full"/>
+                                            <x-input-error class="mt-2" :messages="$errors->get('margin')"/>
+                                        </div>
                                     </div>
 
                                     <x-primary-button>submit</x-primary-button>

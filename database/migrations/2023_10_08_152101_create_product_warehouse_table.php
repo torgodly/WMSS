@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('warehouse_id');
             $table->foreignId('product_id');
             $table->integer('quantity');
+            $table->integer('margin');
             $table->timestamps();
         });
     }

@@ -85,7 +85,7 @@ class WarehouseController extends Controller
             return redirect()->route('warehouse.show', $warehouse->id)
                 ->with('message', 'Product already attached.');
         }
-        $warehouse->products()->attach([$request->product_id => ['quantity' => $request->quantity]]);
+        $warehouse->products()->attach([$request->product_id => ['quantity' => $request->quantity, 'margin' => $request->margin]]);
         return redirect()->route('warehouse.show', $warehouse->id)
             ->with('message', 'Product attached successfully.');
     }
@@ -99,7 +99,7 @@ class WarehouseController extends Controller
                 ->with('message', 'Product not attached.');
         }
 
-        $warehouse->products()->updateExistingPivot($request->product_id, ['quantity' => $request->quantity]);
+        $warehouse->products()->updateExistingPivot($request->product_id, ['quantity' => $request->quantity, 'margin' => $request->margin]);
         return redirect()->route('warehouse.show', $warehouse->id)
             ->with('message', 'Product quantity updated successfully.');
     }

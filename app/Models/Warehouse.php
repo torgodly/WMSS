@@ -21,6 +21,6 @@ class Warehouse extends Model
     //products
     public function products()
     {
-        return $this->belongsToMany(Product::class)->withPivot('quantity');
+        return $this->belongsToMany(Product::class)->withPivot(['quantity', 'margin']);
     }
 }
