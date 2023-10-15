@@ -60,6 +60,7 @@ Route::middleware('auth')->group(function () {
 
     //Sale routes
     Route::get('/sale/{warehouse}', [\App\Http\Controllers\SaleController::class, 'show'])->name('sale.show');
+    Route::post('/sale/{warehouse}/{product}/{quantity}', [\App\Http\Controllers\SaleController::class, 'store'])->name('sale.store');
 
 });
 

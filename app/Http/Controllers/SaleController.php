@@ -23,4 +23,18 @@ class SaleController extends Controller
         }
         return view('sale.show', compact('warehouse', 'price', 'total', 'product'));
     }
+
+
+    //store sale
+    public function store(Warehouse $warehouse, $product, $quantity)
+    {
+        $product = $warehouse->products->find($product);
+        if ($product->pivot->quantity >= $quantity) {
+            $product->pivot->quantity -= $quantity;
+            $product->pivot->save();
+            return redirect()->route('sale.show', $warehouse)->with('message', 'Sale completed');
+        } else {
+            return redirect()->route('sale.show', $warehouse)->with('message', 'Not enough quantity, you have'.' '.$product->pivot->quantity.' '.'in stock');
+        }
+    }
 }

@@ -28,7 +28,7 @@
                                           autocomplete="quantity"/>
                             <x-input-error class="mt-2" :messages="$errors->get('quantity')"/>
                         </div>
-                        <x-primary-button>
+                        <x-primary-button class="mt-3">
                             {{ __('Save') }}
                         </x-primary-button>
                     </form>
@@ -56,9 +56,6 @@
                                     </button>
 
 
-
-
-
                                 </div>
                                 <h3 class="text-lg leading-6 font-medium text-gray-900 text-center" id="modal-title">
                                     {{__('Confirm sale')}}
@@ -80,6 +77,17 @@
                                         <div class="text-gray-500">{{__('Total')}}</div>
                                         <div class="text-gray-900">{{$total}}</div>
                                     </div>
+                                    <div class="flex justify-center items-center">
+                                        <form
+                                            action="{{route('sale.store', ['warehouse' => $warehouse->id,'product'=>$product->id, 'quantity'=>request('quantity')])}}"
+                                            method="post">
+                                            @csrf
+                                            <x-primary-button>
+                                                {{ __('Confirm') }}
+                                            </x-primary-button>
+                                        </form>
+                                    </div>
+
                                 </div>
 
                             </div>
