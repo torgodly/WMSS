@@ -56,6 +56,9 @@
                                         <x-primary-button :link="route('warehouse.show', $warehouse->id)">
                                             Show
                                         </x-primary-button>
+                                        <x-primary-button :link="route('sale.show', $warehouse->id)">
+                                            Sale
+                                        </x-primary-button>
 
                                     </td>
                                 </tr>

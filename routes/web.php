@@ -57,6 +57,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/product/{product}', [\App\Http\Controllers\ProductController::class, 'show'])->name('product.show');
     //update
     Route::patch('/product/{product}', [\App\Http\Controllers\ProductController::class, 'update'])->name('product.update');
+
+    //Sale routes
+    Route::get('/sale/{warehouse}', [\App\Http\Controllers\SaleController::class, 'show'])->name('sale.show');
+
 });
 
 require __DIR__.'/auth.php';
