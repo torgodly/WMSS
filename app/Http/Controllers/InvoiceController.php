@@ -12,13 +12,18 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        $invoices = Invoice::with('product', 'warehouse')->orderBy('created_at', 'desc')->paginate(10);
+        if (\Auth::user()->role == 1){
+            $invoices = Invoice::with('product', 'warehouse')->orderBy('created_at', 'desc')->paginate(10);
 
-        if (\request('warehouse')) {
-            $invoices = $invoices->where('warehouse_id', \request('warehouse'));
-        }elseif (\request('product')) {
-            $invoices = $invoices->where('product_id', \request('product'));
+            if (\request('warehouse')) {
+                $invoices = $invoices->where('warehouse_id', \request('warehouse'));
+            }elseif (\request('product')) {
+                $invoices = $invoices->where('product_id', \request('product'));
+            }
+        }elseif (\Auth::user()->role == 0){
+            $invoices = \Auth::user()->warehouse->invoices()->with('product', 'warehouse')->orderBy('created_at', 'desc')->paginate(10);
         }
+
         return view('invoice.index', compact('invoices'));
     }
 

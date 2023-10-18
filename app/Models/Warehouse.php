@@ -25,7 +25,7 @@ class Warehouse extends Model
     }
 
     //invoices
-    public function invoices()
+    public function invoices(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Invoice::class);
     }

@@ -51,11 +51,11 @@
                                     <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                         {{$invoice->customer_name}}
                                     </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900 cursor-pointer" onclick="location.href='{{route('invoice.index', ['warehouse' => $invoice->warehouse->id])}}'">
-                                        {{$invoice->warehouse->name}}
+                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900 cursor-pointer" onclick="location.href='{{route('invoice.index', ['warehouse' => $invoice->warehouse?->id])}}'">
+                                        {{$invoice->warehouse?->name}}
                                     </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900 cursor-pointer" onclick="location.href='{{route('invoice.index', ['product' => $invoice->product->id])}}'">
-                                        {{$invoice->product->name}}
+                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900 cursor-pointer" onclick="location.href='{{route('invoice.index', ['product' => $invoice->product?->id])}}'">
+                                        {{$invoice->product?->name}}
                                     </td>
                                     <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                         <div class="{{$invoice->type == 'export' ? 'bg-green-500' : 'bg-red-500'}} px-3 py-2 rounded-xl">

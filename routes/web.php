@@ -28,22 +28,38 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 
+    Route::middleware('Admin')->group(function () {
+        //store warehouse
+        Route::post('/warehouse', [\App\Http\Controllers\WarehouseController::class, 'store'])->name('warehouse.store');
+        //update
+        Route::patch('/warehouse/{warehouse}', [\App\Http\Controllers\WarehouseController::class, 'update'])->name('warehouse.update');
+        //remove product from warehouse
+        Route::delete('/warehouse/{warehouse}/product', [\App\Http\Controllers\WarehouseController::class, 'detachProduct'])->name('warehouse.removeProduct');
+
+
+        //destory
+        Route::delete('/product/{product}', [\App\Http\Controllers\ProductController::class, 'destroy'])->name('product.destroy');
+
+
+        //update
+        Route::patch('/product/{product}', [\App\Http\Controllers\ProductController::class, 'update'])->name('product.update');
+
+
+    });
+
     //get warehouse
     Route::get('/warehouse', [\App\Http\Controllers\WarehouseController::class, 'index'])->name('warehouse.index');
-    //store warehouse
-    Route::post('/warehouse', [\App\Http\Controllers\WarehouseController::class, 'store'])->name('warehouse.store');
+
     //destory
     Route::delete('/warehouse/{warehouse}', [\App\Http\Controllers\WarehouseController::class, 'destroy'])->name('warehouse.destroy');
     //show
     Route::get('/warehouse/{warehouse}', [\App\Http\Controllers\WarehouseController::class, 'show'])->name('warehouse.show');
-    //update
-    Route::patch('/warehouse/{warehouse}', [\App\Http\Controllers\WarehouseController::class, 'update'])->name('warehouse.update');
+
     //add product to warehouse
     Route::post('/warehouse/{warehouse}/product', [\App\Http\Controllers\WarehouseController::class, 'attachProduct'])->name('warehouse.addProduct');
     //update product quantity in warehouse
     Route::patch('/warehouse/{warehouse}/product', [\App\Http\Controllers\WarehouseController::class, 'updateProductQuantity'])->name('warehouse.updateProductQuantity');
-    //remove product from warehouse
-    Route::delete('/warehouse/{warehouse}/product', [\App\Http\Controllers\WarehouseController::class, 'detachProduct'])->name('warehouse.removeProduct');
+
 
 
     //get product
@@ -51,12 +67,7 @@ Route::middleware('auth')->group(function () {
 
     //store product
     Route::post('/product', [\App\Http\Controllers\ProductController::class, 'store'])->name('product.store');
-    //destory
-    Route::delete('/product/{product}', [\App\Http\Controllers\ProductController::class, 'destroy'])->name('product.destroy');
-    //show
-    Route::get('/product/{product}', [\App\Http\Controllers\ProductController::class, 'show'])->name('product.show');
-    //update
-    Route::patch('/product/{product}', [\App\Http\Controllers\ProductController::class, 'update'])->name('product.update');
+
 
     //Sale routes
     Route::get('/sale/{warehouse}', [\App\Http\Controllers\SaleController::class, 'show'])->name('sale.show');

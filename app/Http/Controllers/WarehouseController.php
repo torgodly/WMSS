@@ -11,14 +11,22 @@ class WarehouseController extends Controller
 {
     public function index()
     {
+        $users = null;
         $warehousesEdit = null;
 
-        $warehouses = Warehouse::with('user')->orderBy('created_at', 'desc')->paginate(10);
-        $users = User::all();
+        if (\Auth::user()->role == 1) {
 
-        if (\request('ID')) {
-            $warehousesEdit = Warehouse::findOrFail(\request('ID'));
+            $warehouses = Warehouse::with('user')->orderBy('created_at', 'desc')->paginate(10);
+            $users = User::all();
+
+            if (\request('ID')) {
+                $warehousesEdit = Warehouse::findOrFail(\request('ID'));
+            }
+        } elseif (\Auth::user()->role == 0) {
+            $warehouses = \Auth::user()->warehouse()->with('user')->orderBy('created_at', 'desc')->paginate(10);
         }
+
+
         return view('warehouse.index', compact('warehouses', 'users', 'warehousesEdit'));
     }
 
