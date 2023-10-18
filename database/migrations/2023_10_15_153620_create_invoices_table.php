@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->string('quantity');
             $table->decimal('price');
             $table->decimal('margin');
+            $table->enum('type',['export', 'import']);
             $table->foreignId('product_id');
             $table->foreignId('warehouse_id');
             $table->timestamps();

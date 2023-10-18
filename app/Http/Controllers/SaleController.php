@@ -47,6 +47,7 @@ class SaleController extends Controller
             'customer_name' => $request->customer_name,
             'price' => $product->price,
             'margin' => $product->pivot->margin,
+            'type' => 'export',
         ];
         if ($product->pivot->quantity >= $quantity) {
             $product->pivot->quantity -= $quantity;

@@ -85,7 +85,18 @@ class WarehouseController extends Controller
             return redirect()->route('warehouse.show', $warehouse->id)
                 ->with('message', 'Product already attached.');
         }
+        $product = Product::findOrFail($request->product_id);
         $warehouse->products()->attach([$request->product_id => ['quantity' => $request->quantity, 'margin' => $request->margin]]);
+        $InvoiceData = [
+            'invoice_number' => uniqid('invoice-', false),
+            'product_id' => $request->product_id,
+            'quantity' => $request->quantity,
+            'customer_name' => 'warehouse' . ' ' . $warehouse->name,
+            'price' => $product->price,
+            'margin' => $request->margin,
+            'type' => 'import',
+        ];
+        $warehouse->invoices()->create($InvoiceData);
         return redirect()->route('warehouse.show', $warehouse->id)
             ->with('message', 'Product attached successfully.');
     }
@@ -98,8 +109,18 @@ class WarehouseController extends Controller
             return redirect()->route('warehouse.show', $warehouse->id)
                 ->with('message', 'Product not attached.');
         }
-
+        $product = Product::findOrFail($request->product_id);
         $warehouse->products()->updateExistingPivot($request->product_id, ['quantity' => $request->quantity, 'margin' => $request->margin]);
+        $InvoiceData = [
+            'invoice_number' => uniqid('invoice-', false),
+            'product_id' => $request->product_id,
+            'quantity' => $request->quantity,
+            'customer_name' => 'warehouse' . ' ' . $warehouse->name,
+            'price' => $product->price,
+            'margin' => $request->margin,
+            'type' => 'import',
+        ];
+        $warehouse->invoices()->create($InvoiceData);
         return redirect()->route('warehouse.show', $warehouse->id)
             ->with('message', 'Product quantity updated successfully.');
     }
