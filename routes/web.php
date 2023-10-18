@@ -61,7 +61,8 @@ Route::middleware('auth')->group(function () {
     //Sale routes
     Route::get('/sale/{warehouse}', [\App\Http\Controllers\SaleController::class, 'show'])->name('sale.show');
     Route::post('/sale/{warehouse}/{product}/{quantity}', [\App\Http\Controllers\SaleController::class, 'store'])->name('sale.store');
-
+    //index invlices
+    Route::get('/invoice', [\App\Http\Controllers\InvoiceController::class, 'index'])->name('invoice.index');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

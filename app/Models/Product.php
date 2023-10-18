@@ -19,4 +19,10 @@ class Product extends Model
     {
         return $this->belongsToMany(Warehouse::class)->withPivot(['quantity', 'margin']);
     }
+
+    //invoices
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
 }

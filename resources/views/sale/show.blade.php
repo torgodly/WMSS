@@ -11,11 +11,10 @@
                     <form action="" method="get">
                         <div>
                             <x-input-label for="product_id" :value="__('Products')"/>
-                            <select name="product_id"
+                            <select name="product_id" 
                                     class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full">
                                 @foreach($warehouse->products as $product)
-                                    <option value="{{$product->id}}">{{$product->name}} {{$product->price}}
-                                        - {{$product->pivot->margin}}</option>
+                                    <option value="{{$product->id}}" >{{$product->name}} - {{$product->pivot->quantity}}</option>
                                 @endforeach
                             </select>
                             <x-input-error class="mt-2" :messages="$errors->get('product_id')"/>
@@ -61,42 +60,47 @@
                                     {{__('Confirm sale')}}
                                 </h3>
                                 <div class="flex flex-col mt-3">
-                                    <div class="flex justify-between">
-                                        <div class="text-gray-500">{{__('product')}}</div>
-                                        <div class="text-gray-900">{{$product->name}}</div>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <div class="text-gray-500">{{__('quantity')}}</div>
-                                        <div class="text-gray-900">{{request('quantity')}}</div>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <div class="text-gray-500">{{__('unit sale')}}</div>
-                                        <div class="text-gray-900">{{$price}}</div>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <div class="text-gray-500">{{__('Total')}}</div>
-                                        <div class="text-gray-900">{{$total}}</div>
-                                    </div>
-                                    <div class="flex justify-center items-center">
-                                        <form
-                                            action="{{route('sale.store', ['warehouse' => $warehouse->id,'product'=>$product->id, 'quantity'=>request('quantity')])}}"
-                                            method="post">
-                                            @csrf
+                                    <form
+                                        action="{{route('sale.store', ['warehouse' => $warehouse->id,'product'=>$Product->id, 'quantity'=>request('quantity')])}}"
+                                        method="post">
+                                        @csrf
+                                        <x-text-input id="customer_name" name="customer_name"
+                                                      class="mt-1 block w-full"
+                                                      :value="request('customer_name')" required autofocus
+                                                      autocomplete="customer_name"/>
+                                        <div class="flex justify-between">
+                                            <div class="text-gray-500">{{__('product')}}</div>
+                                            <div class="text-gray-900">{{$Product->name}}</div>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <div class="text-gray-500">{{__('quantity')}}</div>
+                                            <div class="text-gray-900">{{request('quantity')}}</div>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <div class="text-gray-500">{{__('unit sale')}}</div>
+                                            <div class="text-gray-900">{{$price}}</div>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <div class="text-gray-500">{{__('Total')}}</div>
+                                            <div class="text-gray-900">{{$total}}</div>
+                                        </div>
+                                        <div class="flex justify-center items-center">
+
                                             <x-primary-button>
                                                 {{ __('Confirm') }}
                                             </x-primary-button>
-                                        </form>
-                                    </div>
-
+                                    </form>
                                 </div>
 
                             </div>
 
                         </div>
+
                     </div>
                 </div>
             </div>
-        @endif
+    </div>
+    @endif
     </div>
 
 </x-app-layout>
